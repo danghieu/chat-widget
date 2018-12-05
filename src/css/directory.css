@@ -1,0 +1,79 @@
+#directory {
+  height: 100%;
+  width: 250px;
+  background-color: #f15927;
+}
+
+.room-list {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.room {
+  width: 100%;
+  padding-left: 20px;
+  height: 50px;
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+
+.room:hover {
+  background-color: #a30e27;
+  cursor: pointer;
+}
+
+.room-name {
+  font-family: 'Lato', sans-serif;
+  color: white;
+  font-size: 16px;
+  padding-left: 10px;
+}
+
+.room-title {
+  font-family: 'Lato', sans-serif;
+  color: white;
+  font-size: 16px;
+  padding-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 2px;
+}
+
+.user-container {
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px
+}
+
+#user-name {
+  font-family: 'Lato', sans-serif;
+  color: white;
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+
+#user-duration {
+  font-family: 'Lato', sans-serif;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 13px;
+}
+
+.fa-circle {
+  font-size: 10px;
+  color: #3adc3a;
+  margin-right: 3px;
+}
