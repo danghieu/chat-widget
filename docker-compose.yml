@@ -1,0 +1,18 @@
+version: '3.5'
+
+services:
+
+  app:
+    container_name: chat-widget
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: 'npm start'
+    volumes:
+      - '.:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3000:3000'
+      - '8989:8989'
+    environment:
+      - NODE_ENV=development
