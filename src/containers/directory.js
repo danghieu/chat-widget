@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
 import Directory from '../components/directory/directory';
-
+import { fetchChannels } from '../actions/channel';
 const mapStateToProps = state => ({
-  rooms: state.rooms,
-  user: state.user
+  user: state.user,
+  channels: fetchChannels()
 });
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    fetchChannels: () => dispatch(fetchChannels()),
+  }
   // return {
   //   fetchRoom: (id) => dispatch(fetchRoom(id)),
   //   fetchMessages: (id) => dispatch(fetchMessages(id))
