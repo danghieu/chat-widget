@@ -4,7 +4,7 @@
   background-color: #f15927;
 }
 
-.room-list {
+.channel-list {
   width: 100%;
   height: 80%;
   display: flex;
@@ -14,7 +14,7 @@
   margin-top: 10px;
 }
 
-.room {
+.channel {
   width: 100%;
   padding-left: 20px;
   height: 50px;
@@ -24,19 +24,19 @@
   flex-direction: row;
 }
 
-.room:hover {
+.channel:hover {
   background-color: #a30e27;
   cursor: pointer;
 }
 
-.room-name {
+.channel-name {
   font-family: 'Lato', sans-serif;
   color: white;
   font-size: 16px;
   padding-left: 10px;
 }
 
-.room-title {
+.channel-title {
   font-family: 'Lato', sans-serif;
   color: white;
   font-size: 16px;

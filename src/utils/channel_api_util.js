@@ -3,7 +3,28 @@
  */
 import channels from './channels.json'
 
-const TIMEOUT = 100
+const TIMEOUT = 1000
 export default {
-  fetchChannels: (cb, timeout) => setTimeout(() => cb(channels), timeout || TIMEOUT)
+  fakeGetChannels: fakeGetChannels
+}
+
+function fakeGetChannels() {
+  return new Promise(resolve => {
+    // Resolve after a timeout so we can see the loading indicator
+    setTimeout(
+      () =>
+        resolve({
+          channels: channels
+        }),
+        TIMEOUT
+    );
+  });
+}
+
+// Handle HTTP errors since fetch won't.
+function handleErrors(response) {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+  return response;
 }

@@ -1,46 +1,40 @@
-import React from 'react';
+import React from "react";
+import { fetchChannels } from "../../actions/channel";
 
 // Components
 import UserItem from './user_item.js';
 import Channel from './channel';
-// class Directory extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     // this.user = props.user;
-//     this.channels = [
-//       {"name":"channel 1","id":0},
-//       {"name":"channel 2","id":1},
-//       {"name":"channel 3","id":2}
-//     ];
-    
-//     console.log(this.channels);
-//   }
 
-//   render() {
-//     return (
-//       <div id='directory'>
-//         <UserItem user={this.user} />
-//         <div className='channel-list'>
-//           {this.channels.map(channel => (
-//             <Channel channel={channel} id={channel.id} key={channel.id} />
-//           ))}
-//         </div>
-//       </div>
-//     )
-//   }
-// }
-const Directory = ({ channels, fetchChannel, user, fetchMessages }) => {
-  console.log(channels);
-  return (
-    <div id='directory'>
-      <UserItem user={user} />
-      <div className='channel-list'>
-        {channels.map(channel => (
-          <Channel room={channel} id={channel.id} key={channel.id} />
-        ))}
+class Directory extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(fetchChannels());
+  }
+
+  render() {
+    
+    const {error, loading, channels, user } = this.props;
+    let message;
+    if (error) {
+      message = <div>Error! {error.message}</div>;
+    }
+
+    if (loading) {
+      message = <div>Loading...</div>;
+    }
+
+    return (
+      <div id='directory'>
+        
+        <UserItem user={user} />
+        <div className='channel-list'>
+          {message}
+          {channels.map(channel => (
+            <Channel channel={channel} id={channel.id} key={channel.id} />
+          ))}
+        </div>
       </div>
-    </div>
-  )
+    );
+  }
 }
 
 export default Directory;
