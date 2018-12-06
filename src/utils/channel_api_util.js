@@ -5,7 +5,8 @@ import channels from './channels.json'
 
 const TIMEOUT = 1000
 export default {
-  fakeGetChannels: fakeGetChannels
+  fakeGetChannels: fakeGetChannels,
+  fakeGetChannel: fakeGetChannel
 }
 
 function fakeGetChannels() {
@@ -20,6 +21,22 @@ function fakeGetChannels() {
     );
   });
 }
+
+function fakeGetChannel(id) {
+  return new Promise(resolve => {
+    let channel = channels.filter(channel => channel.id == id);
+    channel = (channel && channel[0]) ? channel[0] : {};
+    // Resolve after a timeout so we can see the loading indicator
+    setTimeout(
+      () =>
+        resolve({
+          channel: channel
+        }),
+        TIMEOUT
+    );
+  });
+}
+
 
 // Handle HTTP errors since fetch won't.
 function handleErrors(response) {
