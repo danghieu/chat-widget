@@ -1,7 +1,8 @@
 import {
   FETCH_MESSAGES_BEGIN,
   FETCH_MESSAGES_SUCCESS,
-  FETCH_MESSAGES_FAILURE
+  FETCH_MESSAGES_FAILURE,
+  RECEIVE_MESSAGE
 }  from '../actions/message';
 
 const initialState = {
@@ -23,7 +24,6 @@ export default function MessageReducer (
       };
 
     case FETCH_MESSAGES_SUCCESS:
-
       return {
         ...state,
         loading: false,
@@ -37,6 +37,13 @@ export default function MessageReducer (
         error: action.payload.error,
         items: []
       };
+
+    case RECEIVE_MESSAGE:
+      let items = state.items.slice(0)
+      items.push(action.payload.message);
+      state.items = items;
+      console.log(state);
+      return state;
 
     default:
       return state;
