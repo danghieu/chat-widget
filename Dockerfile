@@ -12,5 +12,7 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 RUN npm install -g create-react-app
 RUN npm install react-scripts -g --silent
 
+RUN npm install -g react-devtools --unsafe-perm=true --allow-root
+
 # start app
 CMD ["bash"]
