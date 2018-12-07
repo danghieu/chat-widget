@@ -1,6 +1,7 @@
 import React from 'react';
 import MessagesList from './messagesList';
 import ChannelInfo from './channelInfo';
+
 // Messages entry point that displays message log and input field
 class Messages extends React.Component {
   constructor(props) {
@@ -12,7 +13,6 @@ class Messages extends React.Component {
     if (event.key == 'Enter') {
       this.props.addMessage(props.channel.id, event.target.value, props.user);
       event.target.value = "";
-      // this.props.fetchChannel(props.channel.id);
     }
   }
   render() {

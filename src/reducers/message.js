@@ -41,9 +41,10 @@ export default function MessageReducer (
     case RECEIVE_MESSAGE:
       let items = state.items.slice(0)
       items.push(action.payload.message);
-      state.items = items;
-      console.log(state);
-      return state;
+      return {
+        ...state,
+        items: items,
+      };
 
     default:
       return state;
