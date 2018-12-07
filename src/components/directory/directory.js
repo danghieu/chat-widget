@@ -11,7 +11,6 @@ class Directory extends React.Component {
   componentDidMount() {
     this.props.fetchChannels();
     // this.props.fetchChannel(0);
-    // console.log(this.props.state);
   }
 
   render() {
@@ -30,15 +29,9 @@ class Directory extends React.Component {
       let channelId = e.target.id;
       if (channelId) {
         this.props.fetchChannel(channelId)
-          .then(this.props.fetchMessages(channelId))
-            .then(_scroll());
+          .then(this.props.fetchMessages(channelId));
       }
   
-    }
-
-    const _scroll = () => {
-      let log = document.getElementById('log');
-      log.scrollTop = log.scrollHeight;
     }
 
     return (

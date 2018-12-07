@@ -1,19 +1,19 @@
 import React from 'react';
 
-const MessagesList = ({ messages, user }) => {
+class MessagesList extends React.Component {
   // loop to render all messages
-  const _renderMessages = () => {
-    return (messages.map((m, idx) => {
-      if (m.name === user) {
-        return _renderActive(m, idx);
+  _renderMessages = () => {
+    return (this.props.messages.map((m, idx) => {
+      if (m.name === this.props.user) {
+        return this._renderActive(m, idx);
       } else {
-        return _renderInactive(m, idx);
+        return this._renderInactive(m, idx);
       }
     }))
   }
 
   // render other users messages
-  const _renderInactive = (m, idx) => (
+  _renderInactive = (m, idx) => (
     <div key={idx} className='message-item'>
               <div className='author-message-container'>
                 <div className='message'>{m.message}</div>
@@ -23,7 +23,7 @@ const MessagesList = ({ messages, user }) => {
   )
 
   // render current users messages
-  const _renderActive = (m, idx) => (
+  _renderActive = (m, idx) => (
     <div key={idx} className={'message-item active'}>
               <div className='author-message-container'>
                 <div className='active-message message'>{m.message}</div>
@@ -31,12 +31,27 @@ const MessagesList = ({ messages, user }) => {
               </div>
             </div>
   )
-
-  return (
-    <div className='message-log' id='log'>
-      {_renderMessages()}
-    </div>
-  );
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
+  
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+  
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+  render() {
+    return (
+      <div className='message-log' id='log'>
+        {this._renderMessages()}
+        <div ref={(el) => { this.messagesEnd = el; }}>
+        </div>
+      </div>
+    );
+  }
+  
 };
 
 export default MessagesList;
