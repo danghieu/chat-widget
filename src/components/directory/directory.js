@@ -13,6 +13,13 @@ class Directory extends React.Component {
     // this.props.fetchChannel(0);
   }
 
+  changeActiveChannel(channelId) {
+    return new Promise(resolve => {
+      const { socket, activeChannel } = this.props;
+      socket.emit('leave channel', activeChannel.id);
+      socket.emit('join channel', channelId);
+    });
+  }
   render() {
     
     const {error, loading, channels, user } = this.props;
@@ -28,11 +35,13 @@ class Directory extends React.Component {
     const _handleClick = (e) => {
       let channelId = e.target.id;
       if (channelId) {
-        this.props.fetchChannel(channelId)
-          .then(this.props.fetchMessages(channelId));
-      }
-  
+        this.changeActiveChannel(channelId)
+          .then(this.props.fetchChannel(channelId))
+            .then(this.props.fetchMessages(channelId));
+      };
     }
+
+
 
     return (
       <div id='directory'>

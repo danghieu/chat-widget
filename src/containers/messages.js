@@ -1,17 +1,18 @@
 import { connect } from 'react-redux';
 import Messages from '../components/chat/messages';
-import { addMessage } from '../actions/message';
+import { addMessage, receiveMessage } from '../actions/message';
 
 const mapStateToProps = state => ({
   channel: state.currentChannel,
   messages: state.message.items,
   loading: state.message.loading,
   error: state.message.error,
-  user: state.user,
+  user: state.user
 });
 const mapDispatchToProps = dispatch => {
   return {
-    addMessage: (channelId, message, name) => dispatch(addMessage(channelId, message, name)),
+    addMessage: (channelId, message, name, socket) => dispatch(addMessage(channelId, message, name, socket)),
+    receiveMessage: (message) => dispatch(receiveMessage(message))
   };
 };
 

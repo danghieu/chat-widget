@@ -38,13 +38,20 @@ export function fetchMessages(id) {
   };
 }
 
-export function addMessage(channelId, message, name) {
+export function addMessage(channelId, message, name, socket) {
   return dispatch => {
     return messageApi.addMessage(channelId, message, name)
-      .then(json => {
-        dispatch(receiveMessage(json.message));
-        return json.message;
-      })
-     
+      .then(addNewMessageSocket(socket, channelId, message, name));
   };
+}
+
+export function addNewMessageSocket(socket, channelId, message, name) {
+	return (dispatch) => {
+		let postData = {
+        channelId: channelId,
+        name: name,
+        message:message
+		  }
+	    socket.emit('addMessage', postData)		
+	}	
 }

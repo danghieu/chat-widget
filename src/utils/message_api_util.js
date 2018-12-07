@@ -22,7 +22,7 @@ const messageChannel1 = [
   { name: "Hieu", message: "test channel 2" },
 ];
 
-const messagesdata =[{channel_id: 0, messages: messageChannel0}, {channel_id: 1, messages: messageChannel1}] 
+const messagesdata =[{channel_id: "channel_0", messages: messageChannel0}, {channel_id: "channel_1", messages: messageChannel1}] 
 function fakeGetMessages(id) {
   return new Promise(resolve => {
     let messages = messagesdata.filter(message => message.channel_id == id);
