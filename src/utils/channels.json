@@ -1,5 +1,5 @@
 [
-  {"name":"channel 1","id":0, "users": ["Hieu", "Vu"]},
-  {"name":"channel 2","id":1, "users": ["Hieu", "Vu", "Christophe"]},
-  {"name":"channel 3","id":2, "users": ["Hieu", "Steve"]}
+  {"name":"channel 1","id": "channel_0", "users": ["Hieu", "Vu"]},
+  {"name":"channel 2","id": "channel_1", "users": ["Hieu", "Vu", "Christophe"]},
+  {"name":"channel 3","id": "channel_2", "users": ["Hieu", "Steve"]}
 ]

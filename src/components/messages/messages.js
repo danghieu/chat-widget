@@ -8,10 +8,18 @@ class Messages extends React.Component {
     super(props);
     this._handleEnter = this._handleEnter.bind(this);
   }
+
+  componentDidMount() {
+    const socket = this.props.socket;
+    socket.on('messageAdded', (msg) => {
+      this.props.receiveMessage(msg)
+    });
+  }
+
   _handleEnter(event) {
     let props = this.props;
     if (event.key == 'Enter') {
-      this.props.addMessage(props.channel.id, event.target.value, props.user);
+      this.props.addMessage(props.channel.id, event.target.value, props.user, props.socket);
       event.target.value = "";
     }
   }

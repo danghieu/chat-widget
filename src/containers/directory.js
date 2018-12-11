@@ -8,7 +8,8 @@ const mapStateToProps = state => ({
   channels: state.channel.items,
   loading: state.channel.loading,
   error: state.channel.error,
-  user: state.user
+  user: state.user,
+  activeChannel: state.currentChannel
 });
 
 const mapDispatchToProps = dispatch => {
