@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Root from './components/root';
-import configureStore from './store';
+// import Root from './components/root';
+import { Provider } from 'react-redux';
+import configureStore from './store/store';
 import './css/style.css';
+import Routes from './routes';
 import * as serviceWorker from './serviceWorker';
 
 let store;
@@ -13,6 +15,12 @@ if (user) {
 } else {
   store = configureStore();
 }
-ReactDOM.render(<Root store={store}/>, document.getElementById('root'));
+const rootElement = document.getElementById('root');
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Routes />
+  </Provider>,
+  rootElement);
 
 serviceWorker.unregister();

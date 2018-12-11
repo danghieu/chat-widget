@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 // Components
 import Login from '../containers/login';
-import Chat from './chat/chat';
+// import Chat from './chat/chat';
 
 const Root = ({ store }) => {
   
