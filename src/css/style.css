@@ -2,6 +2,7 @@
 @import url('./login.css');
 @import url('./directory.css');
 @import url('./chat.css');
+@import url('./welcome.css');
 html {
   width: 100%;
   height: 100%;

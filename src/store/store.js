@@ -2,10 +2,9 @@ import { createStore } from 'redux';
 import rootReducer from '../reducers/root';
 import enhancers from '../middleware/enhancers';
 
-const configureStore = (preloadedState = {}) => (
+const configureStore = (initialState) => (
   createStore(
     rootReducer,
-    preloadedState,
     enhancers
   )
 );
