@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
 import App from './containers/App';
@@ -6,11 +6,12 @@ import ChatContainer from './containers/ChatContainer';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import Welcome from './components/welcome';
+import history from './history'
 
 class Routes extends React.Component {
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div class="">
           <App>
             <Route path="/" exact component={Welcome}></Route>

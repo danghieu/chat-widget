@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "@version/react-router-v3": "^1.0.0",
+    "history": "^4.7.2",
     "lodash": "^4.17.11",
     "react": "^16.6.3",
     "react-bootstrap": "^0.32.4",
+    "react-cookie": "^3.0.8",
     "react-devtools": "^3.4.3",
     "react-dom": "^16.6.3",
     "react-redux": "^6.0.0",
