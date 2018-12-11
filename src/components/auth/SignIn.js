@@ -35,9 +35,37 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div className='login-page'>
-        <input className='login-textbox' maxLength={20} type='text' id='user' onKeyPress={this._handleKeyPress} onChange={this._handleChange} placeholder='Type in your username...'/>
-        <button className='login-button' onClick={this._login}>Launch Chat</button>
+      <div class="background">
+        <div class="container">
+          <div class="row flex-column justify-content-center align-items-center text-center">
+            <div>
+              <h3 id="time">Please Sign In</h3>
+            </div>
+            <div>
+              <div>
+                <input className='login-textbox' maxLength={20} type='text' name='username'
+                  ref={this.textInput} 
+                  value={this.state.username}
+                  onChange={this.handleChange}
+                  placeholder='Enter username'/>
+              </div>
+              <div>
+                <input className='login-textbox' maxLength={20} type='password'
+                  name='password'
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  value={this.state.password}
+                  placeholder='Enter password'/>
+              </div>
+              <div>
+                <button
+                  onClick={this.handleSubmit}
+                  className='login-button'>Sign In
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
