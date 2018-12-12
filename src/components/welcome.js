@@ -48,7 +48,7 @@ class Welcome extends React.Component {
                 placeholder='Type in your username...'/>
               <div>
                 <Link to="/signin">
-                  <button className='login-button' onClick={this.signin}>Sign In</button>
+                  <button className='login-button' onClick={this.handleSignUp}>Sign In</button>
                 </Link>
                 <Link to="/signup">
                   <button className='login-button' onClick={this.handleSignUp}>Sign Up</button>

@@ -1,36 +1,55 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { capitalize } from 'lodash';
+import { connect } from 'react-redux';
+import * as authActions from '../../actions/user';
 
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: ""
+      username: this.props.username || '',
+      password: ''
     };
-    this._login = this._login.bind(this);
-    this._handleChange = this._handleChange.bind(this);
-    this._handleKeyPress = this._handleKeyPress.bind(this)
+    this.usernameInput = React.createRef();
+    this.passwordInput = React.createRef();
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-// allows login on key enter
-  _handleKeyPress(event) {
-    if (event.key === "Enter") {
-      this._login();
+  componentDidMount() {
+    if (this.state.username.length > 0) {
+      this.passwordInput.current.focus();
+    } else {
+      this.usernameInput.current.focus();
     }
   }
 
-// dispatches the login action and redirects to chat interface
-  _login() {
-    this.props.loginUser(capitalize(this.state.user));
-    this.props.history.push('/chat');
+  // save input field string in component state
+  handleChange(event) {
+    if (event.target.name === 'username') {
+      this.setState({ username: event.target.value });
+    }
+    if (event.target.name === 'password') {
+      this.setState({ password: event.target.value });
+    }
   }
 
-// save input field string in component state
-  _handleChange(event) {
-    let state = {};
-    state[event.target.id] = event.target.value;
-    this.setState(state);
+  handleSubmit(event) {
+    event.preventDefault();
+    const { dispatch } = this.props;
+    if (this.state.username.length < 1) {
+      this.refs.usernameInput.getInputDOMNode().focus();
+    }
+    if (this.state.username.length > 0 && this.state.password.length < 1) {
+      this.refs.passwordInput.getInputDOMNode().focus();
+    }
+    if (this.state.username.length > 0 && this.state.password.length > 0) {
+      var userObj = {
+        username: this.state.username,
+        password: this.state.password
+      };
+      dispatch(authActions.signIn(userObj))
+      this.setState({ username: '', password: ''});
+    }
   }
 
   render() {
@@ -44,7 +63,7 @@ class SignIn extends React.Component {
             <div>
               <div>
                 <input className='login-textbox' maxLength={20} type='text' name='username'
-                  ref={this.textInput} 
+                  ref={this.usernameInput} 
                   value={this.state.username}
                   onChange={this.handleChange}
                   placeholder='Enter username'/>
@@ -52,6 +71,7 @@ class SignIn extends React.Component {
               <div>
                 <input className='login-textbox' maxLength={20} type='password'
                   name='password'
+                  ref={this.passwordInput}
                   value={this.state.password}
                   onChange={this.handleChange}
                   value={this.state.password}
@@ -71,4 +91,9 @@ class SignIn extends React.Component {
   }
 }
 
-export default withRouter(SignIn);
+function mapStateToProps(state) {
+  return {
+    username: state.welcome,
+  }
+}
+export default connect(mapStateToProps)(SignIn)

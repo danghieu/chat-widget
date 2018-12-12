@@ -57,3 +57,42 @@ export function signUp(user) {
       .catch(error => {throw error});
   };
 }
+
+function requestSignIn() {
+  return {
+    type: types.AUTH_SIGNIN
+  }
+}
+
+function receiveSignIn(username) {
+  const user = {
+    name: username,
+    id: Symbol(username)
+  }
+  return {
+    type: types.AUTH_SIGNIN_SUCCESS,
+    user
+  }
+}
+
+export function signIn(user) {
+  return dispatch => {
+    dispatch(requestSignIn())
+    const url = BACKEND_URL+'/api/sign_in';
+    return fetch(url, {
+    method: 'post',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
+    })
+    .then(response => {
+      if(response.ok) {
+        const cookies = new Cookies();
+        cookies.set('username', user.username, { path: '/' })
+        dispatch(receiveSignIn(user.username));
+        history.push('/chat');
+      }
+    })
+    .catch(error => {throw error});
+  };
+}
