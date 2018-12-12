@@ -12,7 +12,7 @@ class Routes extends React.Component {
   render() {
     return (
       <Router history={history}>
-        <div class="">
+        <div>
           <App>
             <Route path="/" exact component={Welcome}></Route>
             <Route path="/welcome" component={Welcome}></Route>

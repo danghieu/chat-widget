@@ -37,7 +37,7 @@ class UserItem extends React.Component {
   render() {
     return (
       <div className='user-container'>
-      <div id='user-name'>{ this.props.user }</div>
+      <div id='user-name'>{ this.props.user.username }</div>
       <div id='user-duration'>
         <i className="fa fa-circle"></i>Online for {this.state.minutes} minute(s)
       </div>

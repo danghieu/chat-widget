@@ -33,12 +33,12 @@ class Welcome extends React.Component {
 
   render() {
     return (
-      <div class="background">
-        <div class="container">
-          <div class="row flex-column justify-content-center align-items-center text-center">
+      <div className="background">
+        <div className="container">
+          <div className="row flex-column justify-content-center align-items-center text-center">
             <div>
               <h1 id="time">12:00 AM</h1>
-              <h3 id="day" class="display-5">Monday, January 01</h3>
+              <h3 id="day" className="display-5">Monday, January 01</h3>
               <h2 id="greeting">Wellcome to CES chat</h2>
             </div>
             <div>

@@ -96,3 +96,20 @@ export function signIn(user) {
     .catch(error => {throw error});
   };
 }
+
+export function checkAuth() {
+  const cookies = new Cookies();
+  if (cookies.get('username')) {
+    return true;
+  }
+  return false;
+}
+
+export function receiveAuth() {
+  const cookies = new Cookies();
+  const user = cookies.get('username');
+  return {
+    type: types.AUTH_LOAD_SUCCESS,
+    user
+  }
+}
