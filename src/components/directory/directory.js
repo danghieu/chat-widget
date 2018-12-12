@@ -1,5 +1,5 @@
 import React from "react";
-
+import { connect } from 'react-redux';
 // Components
 import UserItem from './user_item.js';
 import Channel from './channel';
@@ -7,10 +7,6 @@ import Channel from './channel';
 class Directory extends React.Component {
   constructor(props) {
     super(props);
-  }
-  componentDidMount() {
-    this.props.fetchChannels();
-    // this.props.fetchChannel(0);
   }
 
   changeActiveChannel(channelId) {
@@ -41,8 +37,6 @@ class Directory extends React.Component {
       };
     }
 
-
-
     return (
       <div id='directory'>
         
@@ -58,4 +52,23 @@ class Directory extends React.Component {
   }
 }
 
-export default Directory;
+const mapStateToProps = state => ({
+  channels: state.channel.data,
+  // loading: state.channel.loading,
+  // error: state.channel.error,
+  user: state.user.user,
+  // activeChannel: state.currentChannel
+});
+
+const mapDispatchToProps = dispatch => {
+  // return {
+  //   fetchChannels: () => dispatch(fetchChannels()),
+  //   fetchChannel: (id) => dispatch(fetchChannel(id)),
+  //   fetchMessages: (id) => dispatch(fetchMessages(id))
+  // };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Directory);

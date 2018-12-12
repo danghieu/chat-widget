@@ -1,51 +1,27 @@
 import channelApi from '../utils/channel_api_util';
+import * as types from '../constants/ActionTypes';
 
-export const FETCH_CHANNELS_BEGIN = "FETCH_CHANNELS_BEGIN";
-export const FETCH_CHANNELS_SUCCESS = "FETCH_CHANNELS_SUCCESS";
-export const FETCH_CHANNELS_FAILURE = "FETCH_CHANNELS_FAILURE";
-export const RECEIVE_CHANNEL = "RECEIVE_CHANNEL";
-
-export const fetchChannelsSuccess = channels => ({
-  type: FETCH_CHANNELS_SUCCESS,
-  payload: { channels }
-});
-
-export const fetchChannelsFailure = error => ({
-  type: FETCH_CHANNELS_FAILURE,
-  payload: { error }
-});
-
-
-export const fetchChannelsBegin = () => ({
-  type: FETCH_CHANNELS_BEGIN
-});
-
-export const receiveChannel = channel => ({
-  type: RECEIVE_CHANNEL,
-  payload: { channel }
-});
-
-export function fetchChannel(id) {
+const BACKEND_URL= 'http://localhost:3000';
+export function fetchChannels(user) {
   return dispatch => {
-    return channelApi.fakeGetChannel(id)
-      .then(json => {
-        dispatch(receiveChannel(json.channel));
-        return json.channel;
-      })
-  };
+    dispatch(requestChannels())
+    const url = BACKEND_URL + `/api/channels`;
+    return fetch(url)
+      .then(response => response.json())
+      .then(json => dispatch(receiveChannels(json)))
+      .catch(error => {throw error});
+  }
 }
 
-export function fetchChannels() {
-  return dispatch => {
-    dispatch(fetchChannelsBegin());
-    return channelApi.fakeGetChannels()
-      .then(json => {
-        dispatch(fetchChannelsSuccess(json.channels));
-        return json.channels;
-      })
-      .catch(error =>
-        dispatch(fetchChannelsFailure(error))
-      );
-  };
+function requestChannels() {
+  return {
+    type: types.LOAD_CHANNELS
+  }
 }
 
+function receiveChannels(json) {
+  return {
+    type: types.LOAD_CHANNELS_SUCCESS,
+    json
+  }
+}

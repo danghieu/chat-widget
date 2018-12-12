@@ -12,15 +12,13 @@ class Routes extends React.Component {
   render() {
     return (
       <Router history={history}>
-        <div>
-          <App>
-            <Route path="/" exact component={Welcome}></Route>
-            <Route path="/welcome" component={Welcome}></Route>
-            <Route path="/signin" component={SignIn}></Route>
-            <Route path="/signup" component={SignUp}></Route>
-            <Route path="/chat" component={ChatContainer} ></Route>
-          </App>          
-        </div>
+        <App>
+          <Route path="/" exact component={Welcome}></Route>
+          <Route path="/welcome" component={Welcome}></Route>
+          <Route path="/signin" component={SignIn}></Route>
+          <Route path="/signup" component={SignUp}></Route>
+          <Route path="/chat" component={ChatContainer} ></Route>
+        </App>          
       </Router>
     )};
 }

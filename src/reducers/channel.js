@@ -1,13 +1,8 @@
-import {
-  FETCH_CHANNELS_BEGIN,
-  FETCH_CHANNELS_SUCCESS,
-  FETCH_CHANNELS_FAILURE
-}  from '../actions/channel';
+import { LOAD_CHANNELS, LOAD_CHANNELS_SUCCESS, LOAD_CHANNELS_FAIL } from '../constants/ActionTypes';
 
 const initialState = {
-  items: [],
-  loading: false,
-  error: null
+  loaded: false,
+  data: []
 };
 
 export default function ChannelReducer (
@@ -15,27 +10,22 @@ export default function ChannelReducer (
   action
 ) {
   switch (action.type) {
-    case FETCH_CHANNELS_BEGIN:
-      return {
-        ...state,
-        loading: true,
-        error: null
+    case LOAD_CHANNELS:
+      return {...state,
+        loading: true
       };
-
-    case FETCH_CHANNELS_SUCCESS:
-
-      return {
-        ...state,
+    case LOAD_CHANNELS_SUCCESS:
+      return {...state,
         loading: false,
-        items: action.payload.channels
+        loaded: true,
+        data: [...state.data, ...action.json]
       };
-
-    case FETCH_CHANNELS_FAILURE:
-      return {
-        ...state,
+    case LOAD_CHANNELS_FAIL:
+      return {...state,
         loading: false,
-        error: action.payload.error,
-        items: []
+        loaded: false,
+        error: action.error,
+        data: [...state.data]
       };
 
     default:
