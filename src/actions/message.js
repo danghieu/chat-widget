@@ -30,3 +30,10 @@ export function fetchMessages(channel) {
       .catch(error => {throw error});
   }
 }
+
+export function receiveMessage(message) {
+  return {
+    type: types.RECEIVE_MESSAGE,
+    message
+  };
+}

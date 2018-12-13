@@ -46,7 +46,7 @@ class UserItem extends React.Component {
     const { user } = this.props;
     return (
       <div className='user-container'>
-      <DropdownButton id="user-menu" bsSize="large" title={ user.username }>
+      <DropdownButton id="user-menu" bsSize="large" title={ user.username || '' }>
         <MenuItem onSelect={this.handleSignOut}>Sign out</MenuItem>
       </DropdownButton>
       <div id='user-duration'>

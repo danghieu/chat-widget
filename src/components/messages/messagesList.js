@@ -45,7 +45,6 @@ class MessagesList extends React.Component {
     this.scrollToBottom();
   }
   render() {
-    console.log(this.props.user);
     return (
       <div className='message-log' id='log'>
         {this._renderMessages()}

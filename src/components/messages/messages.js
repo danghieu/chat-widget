@@ -1,7 +1,11 @@
 import React from 'react';
+import uuid from 'node-uuid';
+import moment from 'moment';
+
 import MessagesList from './messagesList';
 import ChannelInfo from './channelInfo';
 // Actions
+import * as actions from '../../actions/message';
 
 // Messages entry point that displays message log and input field
 class Messages extends React.Component {
@@ -14,16 +18,26 @@ class Messages extends React.Component {
   }
 
   componentDidMount() {
-    const {socket} = this.props;
-    socket.on('messageAdded', (msg) => {
-      this.props.receiveMessage(msg)
+    const {socket, dispatch} = this.props;
+    socket.on('new bc message', (msg) => {
+      console.log(msg)
+      dispatch(actions.receiveMessage(msg));
     });
   }
 
   _handleEnter(event) {
-    let props = this.props;
+    let { user, socket, dispatch } = this.props;
     if (event.key == 'Enter') {
-      this.props.addMessage(props.channel.id, event.target.value, props.user, props.socket);
+      const text = event.target.value.trim();
+      var newMessage = {
+        id: `${Date.now()}${uuid.v4()}`,
+        channel: this.props.activeChannel.name,
+        text: text,
+        user: user,
+        time: moment.utc().format('lll')
+      };
+      dispatch(actions.receiveMessage(newMessage));
+      socket.emit('new message', newMessage);
       event.target.value = "";
     }
   }
@@ -33,7 +47,8 @@ class Messages extends React.Component {
         <ChannelInfo channel={this.props.activeChannel} />
         <MessagesList messages={this.props.messages} user={this.props.user}/>
         <div className='message-field'>
-          <input className='message-text' placeholder='Type your message here...' onKeyPress={this._handleEnter} type='text' />
+          <input type='text' className='message-text' placeholder='Type your message here...'
+            onKeyPress={this._handleEnter}/>
         </div>
       </div>
     );

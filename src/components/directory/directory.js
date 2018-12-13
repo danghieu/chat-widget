@@ -15,7 +15,7 @@ class Directory extends React.Component {
     return new Promise(resolve => {
       const { socket, activeChannel } = this.props;
       if (activeChannel) {
-        socket.emit('leave channel', activeChannel.id);
+        socket.emit('leave channel', activeChannel.name);
       }
       socket.emit('join channel', channelId);
     });
