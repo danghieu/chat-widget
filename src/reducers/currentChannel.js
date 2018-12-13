@@ -1,15 +1,9 @@
-// import { RECEIVE_CHANNEL} from '../actions/channel';
-
-import { merge } from 'lodash';
+import { RECEIVE_CHANNEL} from '../constants/ActionTypes';
 
 const CurrentChannelReducer = (state = {}, action) => {
-  Object.freeze(state);
-
   switch(action.type) {
-    // case RECEIVE_CHANNEL:
-    //   let newState = merge({}, state, action.payload.channel);
-    //   newState.users = action.payload.channel.users;
-    //   return newState;
+    case RECEIVE_CHANNEL:
+      return action.json
     default:
       return state;
   }

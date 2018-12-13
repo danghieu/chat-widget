@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Chat from '../components/chat';
+
 import { receiveAuth } from '../actions/user';
-import { fetchChannels } from '../actions/channel';
+import { fetchChannels, fetchChannel } from '../actions/channel';
 
 import setupSocket from "../sockets"
 let socket = setupSocket();
@@ -10,11 +11,11 @@ let socket = setupSocket();
 class ChatContainer extends Component {
 
   componentDidMount() {
-    const { dispatch, user } = this.props;
+    const { user } = this.props;
     if(!user.username) {
-      dispatch(receiveAuth());
+      this.props.receiveAuth();
     }
-    dispatch(fetchChannels(user.username));
+    this.props.fetchChannels(user.username);
   }
 
   render() {
@@ -28,7 +29,16 @@ function mapStateToProps(state) {
   return {
     user: state.user.user,
     channels: state.channel.data,
+    activeChannel: state.currentChannel
   }
 }
 
-export default connect(mapStateToProps)(ChatContainer)
+const mapDispatchToProps = dispatch => {
+  return {
+    receiveAuth: () => dispatch(receiveAuth()),
+    fetchChannels: () => dispatch(fetchChannels()),
+    fetchChannel: (id) => dispatch(fetchChannel(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer)
