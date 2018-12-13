@@ -40,8 +40,7 @@ class Directory extends React.Component {
 
     return (
       <div id='directory'>
-        
-        <UserItem user={user} />
+        <UserItem user={user} dispatch ={dispatch}/>
         <div className='channel-list' onClick={_handleClick}>
           {message}
           {channels.map(channel => (

@@ -7,7 +7,10 @@ import {
   AUTH_SIGNIN_FAIL,
   AUTH_SIGNUP,
   AUTH_SIGNUP_SUCCESS,
-  AUTH_SIGNUP_FAIL
+  AUTH_SIGNUP_FAIL,
+  AUTH_SIGNOUT,
+  AUTH_SIGNOUT_SUCCESS,
+  AUTH_SIGNOUT_FAIL,
 } from '../constants/ActionTypes';
 
 const initialState = {
@@ -85,6 +88,26 @@ const UserReducer = (state = initialState, action) => {
           username: null,
           id: null
         }
+      };
+    case AUTH_SIGNOUT:
+    return {
+      ...state,
+      signingOut: true
+    }
+    case AUTH_SIGNOUT_SUCCESS:
+      return {
+        ...state,
+        signingOut: false,
+        user: {
+          username: null,
+          id: null
+        }
+      };
+    case AUTH_SIGNOUT_FAIL:
+      return {
+        ...state,
+        signingOut: false,
+        signOutError: action.error
       };
     default:
       return state;

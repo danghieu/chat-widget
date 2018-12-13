@@ -11,11 +11,11 @@ let socket = setupSocket();
 class ChatContainer extends Component {
 
   componentDidMount() {
-    const { user } = this.props;
+    const { user, dispatch } = this.props;
     if(!user.username) {
-      this.props.receiveAuth();
+      dispatch(receiveAuth());
     }
-    this.props.fetchChannels(user.username);
+    dispatch(fetchChannels(user.username));
   }
 
   render() {
@@ -33,12 +33,4 @@ function mapStateToProps(state) {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    receiveAuth: () => dispatch(receiveAuth()),
-    fetchChannels: () => dispatch(fetchChannels()),
-    fetchChannel: (id) => dispatch(fetchChannel(id)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer)
+export default connect(mapStateToProps)(ChatContainer)

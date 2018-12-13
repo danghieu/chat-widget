@@ -113,3 +113,31 @@ export function receiveAuth() {
     user
   }
 }
+
+function requestSignOut() {
+  return {
+    type: types.AUTH_SIGNOUT
+  }
+}
+function receiveSignOut() {
+  return {
+    type: types.AUTH_SIGNOUT_SUCCESS
+  }
+}
+
+export function signOut() {
+  return dispatch => {
+    dispatch(requestSignOut())
+    const url = BACKEND_URL+'/api/signout';
+    return fetch(url)
+      .then(response => {
+        if(response.ok) {
+          const cookies = new Cookies();
+          cookies.remove('username')
+          dispatch(receiveSignOut());
+          history.push('/');
+        }
+      })
+      .catch(error => {throw error});
+  }
+}

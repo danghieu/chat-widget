@@ -1,4 +1,6 @@
 import React from 'react';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
+import * as authActions from '../../actions/user';
 
 class UserItem extends React.Component {
   constructor(props) {
@@ -8,6 +10,7 @@ class UserItem extends React.Component {
       tickId: null
     };
     this._tick = this._tick.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
 // initializes clock to track user duration
@@ -19,6 +22,11 @@ class UserItem extends React.Component {
 // ensures setInterval does not continue counting
   componentWillUnmount() {
     clearInterval(this.state.tickId);
+  }
+
+  handleSignOut() {
+    const { dispatch } = this.props;
+    dispatch(authActions.signOut());
   }
 
 // adds one minute to a user's online duration
@@ -33,11 +41,14 @@ class UserItem extends React.Component {
       });
     }
   }
-
+  
   render() {
+    const { user } = this.props;
     return (
       <div className='user-container'>
-      <div id='user-name'>{ this.props.user.username }</div>
+      <DropdownButton id="user-menu" bsSize="large" title={ user.username }>
+        <MenuItem onSelect={this.handleSignOut}>Sign out</MenuItem>
+      </DropdownButton>
       <div id='user-duration'>
         <i className="fa fa-circle"></i>Online for {this.state.minutes} minute(s)
       </div>
