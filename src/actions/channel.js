@@ -30,7 +30,6 @@ function receiveChannels(json) {
 export function fetchChannel(channelId) {
   return dispatch => {
     const url = BACKEND_URL + `/api/channel/${channelId}`;
-    console.log(url);
     return fetch(url)
       .then(response => response.json())
       .then(json => dispatch(receiveChannel(json)))

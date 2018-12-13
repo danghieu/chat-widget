@@ -2,7 +2,9 @@ import React from "react";
 // Components
 import UserItem from './user_item.js';
 import Channel from './channel';
-
+// Actions
+import { fetchChannel } from '../../actions/channel';
+import { fetchMessages } from '../../actions/message';
 
 class Directory extends React.Component {
   constructor(props) {
@@ -34,7 +36,8 @@ class Directory extends React.Component {
       let channelId = e.target.id;
       if (channelId) {
         this.changeActiveChannel(channelId)
-          .then(this.fetchChannel(channelId))
+          .then(dispatch(fetchChannel(channelId)))
+          .then(dispatch(fetchMessages(channelId)))
       };
     }
 
@@ -44,7 +47,7 @@ class Directory extends React.Component {
         <div className='channel-list' onClick={_handleClick}>
           {message}
           {channels.map(channel => (
-            <Channel channel={channel} id={channel.id} key={channel.id} />
+            <Channel channel={channel} id={channel.name} key={channel.id} />
           ))}
         </div>
       </div>

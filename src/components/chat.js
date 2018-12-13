@@ -1,13 +1,13 @@
 import React from 'react';
 import Directory from './directory/directory';
-// import Messages from '../containers/messages';
+import Messages from './messages/messages';
 
 class Chat extends React.Component {
   render() {
     return (
       <div className='chat-container' >
         <Directory {...this.props}/>
-        {/* <Messages socket={this.props.socket} /> */}
+        <Messages {...this.props} />
       </div>
     );
   }

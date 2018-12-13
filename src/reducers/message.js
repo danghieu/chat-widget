@@ -1,52 +1,45 @@
 import {
-  FETCH_MESSAGES_BEGIN,
-  FETCH_MESSAGES_SUCCESS,
-  FETCH_MESSAGES_FAILURE,
-  RECEIVE_MESSAGE
-}  from '../actions/message';
+  ADD_MESSAGE,
+  RECEIVE_MESSAGE,
+  LOAD_MESSAGES,
+  LOAD_MESSAGES_SUCCESS,
+  LOAD_MESSAGES_FAIL
+} from '../constants/ActionTypes';
 
 const initialState = {
-  items: [],
-  loading: false,
-  error: null
+  loaded: false,
+  data: [],
+  fetchHistory: []
 };
-
-export default function MessageReducer (
-  state = initialState,
-  action
-) {
+export default function messages(state = initialState, action) {
   switch (action.type) {
-    case FETCH_MESSAGES_BEGIN:
-      return {
-        ...state,
-        loading: true,
-        error: null
-      };
-
-    case FETCH_MESSAGES_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        items: action.payload.messages
-      };
-
-    case FETCH_MESSAGES_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload.error,
-        items: []
-      };
-
-    case RECEIVE_MESSAGE:
-      let items = state.items.slice(0)
-      items.push(action.payload.message);
-      return {
-        ...state,
-        items: items,
-      };
-
-    default:
-      return state;
+  case ADD_MESSAGE:
+    return {...state,
+      data: [...state.data, action.message]
+    };
+  case RECEIVE_MESSAGE:
+    return {...state,
+      data: [...state.data, action.message]
+    };
+  case LOAD_MESSAGES:
+    return {...state,
+      loading: true
+    };
+  case LOAD_MESSAGES_SUCCESS:
+    return {...state,
+      loading: false,
+      loaded: true,
+      fetchHistory: [...state.fetchHistory, { lastFetch: action.date, channelName: action.channel }],
+      data: [...state.data.filter(message => message.channelID !== action.channel), ...action.json]
+    };
+  case LOAD_MESSAGES_FAIL:
+    return {...state,
+      loading: false,
+      loaded: false,
+      error: action.error,
+      data: [...state.data]
+    };
+  default:
+    return state;
   }
 }

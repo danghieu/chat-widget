@@ -6,11 +6,6 @@ const ChannelInfo = ({ channel }) => {
   return (
     <div className='channel-info-container'>
       <div className='channel-info-name'>{ channel.name }</div>
-      <div className='user-list'>
-        {channel.users.map((user, idx) => (
-          <div className='user-list-name' key={idx}>{user}</div>
-        ))}
-      </div>
     </div>
   );
 };

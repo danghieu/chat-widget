@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Chat from '../components/chat';
 
 import { receiveAuth } from '../actions/user';
-import { fetchChannels, fetchChannel } from '../actions/channel';
+import { fetchChannels } from '../actions/channel';
 
 import setupSocket from "../sockets"
 let socket = setupSocket();
@@ -29,7 +29,8 @@ function mapStateToProps(state) {
   return {
     user: state.user.user,
     channels: state.channel.data,
-    activeChannel: state.currentChannel
+    activeChannel: state.currentChannel,
+    messages: state.message.data
   }
 }
 

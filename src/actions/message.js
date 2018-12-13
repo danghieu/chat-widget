@@ -1,57 +1,32 @@
 import messageApi from '../utils/message_api_util';
+import * as types from '../constants/ActionTypes';
+import moment from 'moment';
 
-export const FETCH_MESSAGES_BEGIN = "FETCH_MESSAGESS_BEGIN";
-export const FETCH_MESSAGES_SUCCESS = "FETCH_MESSAGES_SUCCESS";
-export const FETCH_MESSAGES_FAILURE = "FETCH_MESSAGES_FAILURE";
-export const RECEIVE_MESSAGE = "RECEIVE_MESSAGE";
+const BACKEND_URL= 'http://localhost:3000';
 
-export const fetchMessagesSuccess = messages => ({
-  type: FETCH_MESSAGES_SUCCESS,
-  payload: { messages }
-});
-
-export const fetchMessagesFailure = error => ({
-  type: FETCH_MESSAGES_FAILURE,
-  payload: { error }
-});
-
-export const fetchMessagesBegin = () => ({
-  type: FETCH_MESSAGES_BEGIN
-});
-
-export const receiveMessage = (message) => ({
-  type: RECEIVE_MESSAGE,
-  payload: { message }
-});
-
-export function fetchMessages(id) {
-  return dispatch => {
-    dispatch(fetchMessagesBegin());
-    return messageApi.fakeGetMessages(id)
-      .then(json => {
-        dispatch(fetchMessagesSuccess(json.messages));
-        return json.messages;
-      })
-      .catch(error =>
-        dispatch(fetchMessagesFailure(error))
-      );
-  };
+function requestMessages() {
+  return {
+    type: types.LOAD_MESSAGES
+  }
 }
 
-export function addMessage(channelId, message, name, socket) {
-  return dispatch => {
-    return messageApi.addMessage(channelId, message, name)
-      .then(addNewMessageSocket(socket, channelId, message, name));
-  };
+function receiveMessages(json, channel) {
+  const date = moment().format('lll');
+  return {
+    type: types.LOAD_MESSAGES_SUCCESS,
+    json,
+    channel,
+    date
+  }
 }
 
-export function addNewMessageSocket(socket, channelId, message, name) {
-	return (dispatch) => {
-		let postData = {
-        channelId: channelId,
-        name: name,
-        message:message
-		  }
-	    socket.emit('addMessage', postData)		
-	}	
+export function fetchMessages(channel) {
+  return dispatch => {
+    dispatch(requestMessages())
+    const url = BACKEND_URL + `/api/messages/${channel}`;
+    return fetch(url)
+      .then(response => response.json())
+      .then(json => dispatch(receiveMessages(json, channel)))
+      .catch(error => {throw error});
+  }
 }
