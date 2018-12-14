@@ -1,8 +1,8 @@
 import io from "socket.io-client"
+import { BACKEND_URL } from '../constants/Config';
 
 const setupSocket = () => {
-  const backendServer = process.env.backendURI||"http://localhost:3000";
-  let socket = io.connect(backendServer)  
+  let socket = io.connect(BACKEND_URL)  
   return socket
 }
 

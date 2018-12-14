@@ -7,7 +7,7 @@ class Welcome extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: ''
+      email: ''
     };
     this.textInput = React.createRef();
     this.handleChange = this.handleChange.bind(this);
@@ -19,16 +19,16 @@ class Welcome extends React.Component {
   }
 
   handleChange(event) {
-    if (event.target.name === 'username') {
-      this.setState({ username: event.target.value });
+    if (event.target.name === 'email') {
+      this.setState({ email: event.target.value });
     }
   }
   
   handleSignUp() {
     const { dispatch } = this.props;
-    const username = this.state.username;
-    dispatch(welcomePage(username));
-    this.setState({ username: '' });
+    const email = this.state.email;
+    dispatch(welcomePage(email));
+    this.setState({ email: '' });
   }
 
   render() {
@@ -42,10 +42,10 @@ class Welcome extends React.Component {
               <h2 id="greeting">Wellcome to CES chat</h2>
             </div>
             <div>
-              <input className='login-textbox' maxLength={20} type='text' name='username'
+              <input className='login-textbox' maxLength={20} type='text' name='email'
                 ref={this.textInput} 
                 onChange={this.handleChange}
-                placeholder='Type in your username...'/>
+                placeholder='Type in your email...'/>
               <div>
                 <Link to="/signin">
                   <button className='login-button' onClick={this.handleSignUp}>Sign In</button>

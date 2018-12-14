@@ -6,27 +6,27 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.username || '',
+      email: this.props.email || '',
       password: ''
     };
-    this.usernameInput = React.createRef();
+    this.emailInput = React.createRef();
     this.passwordInput = React.createRef();
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
-    if (this.state.username.length > 0) {
+    if (this.state.email.length > 0) {
       this.passwordInput.current.focus();
     } else {
-      this.usernameInput.current.focus();
+      this.emailInput.current.focus();
     }
   }
 
   // save input field string in component state
   handleChange(event) {
-    if (event.target.name === 'username') {
-      this.setState({ username: event.target.value });
+    if (event.target.name === 'email') {
+      this.setState({ email: event.target.value });
     }
     if (event.target.name === 'password') {
       this.setState({ password: event.target.value });
@@ -36,37 +36,37 @@ class SignIn extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { dispatch } = this.props;
-    if (this.state.username.length < 1) {
-      this.refs.usernameInput.getInputDOMNode().focus();
+    if (this.state.email.length < 1) {
+      this.refs.emailInput.getInputDOMNode().focus();
     }
-    if (this.state.username.length > 0 && this.state.password.length < 1) {
+    if (this.state.email.length > 0 && this.state.password.length < 1) {
       this.refs.passwordInput.getInputDOMNode().focus();
     }
-    if (this.state.username.length > 0 && this.state.password.length > 0) {
+    if (this.state.email.length > 0 && this.state.password.length > 0) {
       var userObj = {
-        username: this.state.username,
+        email: this.state.email,
         password: this.state.password
       };
       dispatch(authActions.signIn(userObj))
-      this.setState({ username: '', password: ''});
+      this.setState({ email: '', password: ''});
     }
   }
 
   render() {
     return (
-      <div class="background">
-        <div class="container">
-          <div class="row flex-column justify-content-center align-items-center text-center">
+      <div className="background">
+        <div className="container">
+          <div className="row flex-column justify-content-center align-items-center text-center">
             <div>
               <h3 id="time">Please Sign In</h3>
             </div>
             <div>
               <div>
-                <input className='login-textbox' maxLength={20} type='text' name='username'
-                  ref={this.usernameInput} 
-                  value={this.state.username}
+                <input className='login-textbox' maxLength={20} type='text' name='email'
+                  ref={this.emailInput} 
+                  value={this.state.email}
                   onChange={this.handleChange}
-                  placeholder='Enter username'/>
+                  placeholder='Enter email'/>
               </div>
               <div>
                 <input className='login-textbox' maxLength={20} type='password'
@@ -93,7 +93,7 @@ class SignIn extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    username: state.welcome,
+    email: state.welcome,
   }
 }
 export default connect(mapStateToProps)(SignIn)

@@ -16,7 +16,7 @@ import {
 const initialState = {
   loaded: false,
   user: {
-    username: null,
+    email: null,
     id: null,
     socketID: null
   }
@@ -29,11 +29,12 @@ const UserReducer = (state = initialState, action) => {
         loading: true
       };
     case AUTH_LOAD_SUCCESS:
+    console.log(action.user);
       return {
         ...state,
         loading: false,
         loaded: true,
-        user: { ...state.user, username: action.user }
+        user: action.user
       };
     case AUTH_LOAD_FAIL:
       return {
@@ -51,17 +52,14 @@ const UserReducer = (state = initialState, action) => {
       return {
         ...state,
         signingIn: false,
-        user: {
-          username: action.user.name,
-          id: action.user.id
-        }
+        user: action.user
       };
     case AUTH_SIGNIN_FAIL:
       return {
         ...state,
         signingIn: false,
         user: {
-          username: null,
+          email: null,
           id: null
         },
         signInError: action.error
@@ -76,7 +74,7 @@ const UserReducer = (state = initialState, action) => {
         ...state,
         signingUp: false,
         user: {
-          username: action.newUser.name,
+          email: action.newUser.name,
           id: action.newUser.id,
           socketID: null
         }
@@ -85,7 +83,7 @@ const UserReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          username: null,
+          email: null,
           id: null
         }
       };
@@ -99,7 +97,7 @@ const UserReducer = (state = initialState, action) => {
         ...state,
         signingOut: false,
         user: {
-          username: null,
+          email: null,
           id: null
         }
       };

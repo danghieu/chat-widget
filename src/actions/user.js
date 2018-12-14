@@ -1,4 +1,6 @@
 import * as types from '../constants/ActionTypes';
+import * as Config from '../constants/Config';
+
 import { Cookies }from 'react-cookie';
 import history from '../history';
 
@@ -11,17 +13,17 @@ export const receiveCurrentUser = user => ({
   user
 });
 
-export function welcomePage(username) {
+export function welcomePage(email) {
   return {
-    type: types.SAVE_USERNAME,
-    username
+    type: types.SAVE_EMAIL,
+    email
   };
 }
 
-function receiveUser(username) {
+function receiveUser(email) {
   const newUser = {
-    name: username,
-    id: Symbol(username)
+    name: email,
+    id: Symbol(email)
   }
   return {
     type: types.AUTH_SIGNUP_SUCCESS,
@@ -38,7 +40,7 @@ function requestSignUp() {
 export function signUp(user) {
   return dispatch => {
     dispatch(requestSignUp())
-    const url = types.BACKEND_URL+'/api/sign_up';
+    const url = Config.API_URL.signIn;
     return fetch(url, {
       method: 'post',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'
@@ -48,8 +50,8 @@ export function signUp(user) {
       .then(response => {
         if(response.ok) {
           const cookies = new Cookies();
-          cookies.set('username', user.username, { path: '/' })
-          dispatch(receiveUser(user.username));
+          cookies.set('email', user.email, { path: '/' })
+          dispatch(receiveUser(user.email));
           history.push('/chat');
         }
       })
@@ -63,11 +65,7 @@ function requestSignIn() {
   }
 }
 
-function receiveSignIn(username) {
-  const user = {
-    name: username,
-    id: Symbol(username)
-  }
+function receiveSignIn(user) {
   return {
     type: types.AUTH_SIGNIN_SUCCESS,
     user
@@ -77,7 +75,7 @@ function receiveSignIn(username) {
 export function signIn(user) {
   return dispatch => {
     dispatch(requestSignIn())
-    const url = types.BACKEND_URL+'/api/sign_in';
+    const url = Config.API_URL.signIn;
     return fetch(url, {
     method: 'post',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'
@@ -86,9 +84,10 @@ export function signIn(user) {
     })
     .then(response => {
       if(response.ok) {
+        const user = response.json();
         const cookies = new Cookies();
-        cookies.set('username', user.username, { path: '/' })
-        dispatch(receiveSignIn(user.username));
+        cookies.set('user', user, { path: '/' })
+        dispatch(receiveSignIn(user));
         history.push('/chat');
       }
     })
@@ -98,7 +97,7 @@ export function signIn(user) {
 
 export function checkAuth() {
   const cookies = new Cookies();
-  if (cookies.get('username')) {
+  if (cookies.get('email')) {
     return true;
   }
   return false;
@@ -106,7 +105,7 @@ export function checkAuth() {
 
 export function receiveAuth() {
   const cookies = new Cookies();
-  const user = cookies.get('username');
+  const user = cookies.get('user');
   return {
     type: types.AUTH_LOAD_SUCCESS,
     user
@@ -132,7 +131,7 @@ export function signOut() {
       .then(response => {
         if(response.ok) {
           const cookies = new Cookies();
-          cookies.remove('username')
+          cookies.remove('email')
           dispatch(receiveSignOut());
           history.push('/');
         }

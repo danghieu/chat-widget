@@ -12,10 +12,11 @@ class ChatContainer extends Component {
 
   componentDidMount() {
     const { user, dispatch } = this.props;
-    if(!user.username) {
+    console.log(user);
+    if(!user.id) {
       dispatch(receiveAuth());
     }
-    dispatch(fetchChannels(user.username));
+    dispatch(fetchChannels(user.email));
   }
 
   render() {

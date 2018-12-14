@@ -1,4 +1,6 @@
-export const SAVE_USERNAME = 'SAVE_USERNAME';
+export const BACKEND_URL= 'http://192.168.0.39:3000';
+
+export const SAVE_EMAIL = 'SAVE_EMAIL';
 
 export const AUTH_SIGNOUT = 'AUTH_SIGNOUT';
 export const AUTH_SIGNOUT_SUCCESS = 'AUTH_SIGNOUT_SUCCESS';
