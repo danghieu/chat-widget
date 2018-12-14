@@ -1,12 +1,10 @@
 import channelApi from '../utils/channel_api_util';
 import * as types from '../constants/ActionTypes';
 
-const BACKEND_URL= 'http://localhost:3000';
-
 export function fetchChannels(user) {
   return dispatch => {
     dispatch(requestChannels())
-    const url = BACKEND_URL + `/api/channels`;
+    const url = types.BACKEND_URL + `/api/channels`;
     return fetch(url)
       .then(response => response.json())
       .then(json => dispatch(receiveChannels(json)))
@@ -29,7 +27,7 @@ function receiveChannels(json) {
 
 export function fetchChannel(channelId) {
   return dispatch => {
-    const url = BACKEND_URL + `/api/channel/${channelId}`;
+    const url = types.BACKEND_URL + `/api/channel/${channelId}`;
     return fetch(url)
       .then(response => response.json())
       .then(json => dispatch(receiveChannel(json)))

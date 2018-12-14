@@ -18,9 +18,8 @@ class Messages extends React.Component {
   }
 
   componentDidMount() {
-    const {socket, dispatch} = this.props;
+    const {socket, dispatch} = this.props;    
     socket.on('new bc message', (msg) => {
-      console.log(msg)
       dispatch(actions.receiveMessage(msg));
     });
   }

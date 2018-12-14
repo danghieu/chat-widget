@@ -2,7 +2,6 @@ import * as types from '../constants/ActionTypes';
 import { Cookies }from 'react-cookie';
 import history from '../history';
 
-const BACKEND_URL= 'http://localhost:3000'
 export const LOGIN_USER = 'LOGIN_USER';
 export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 
@@ -39,7 +38,7 @@ function requestSignUp() {
 export function signUp(user) {
   return dispatch => {
     dispatch(requestSignUp())
-    const url = BACKEND_URL+'/api/sign_up';
+    const url = types.BACKEND_URL+'/api/sign_up';
     return fetch(url, {
       method: 'post',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'
@@ -78,7 +77,7 @@ function receiveSignIn(username) {
 export function signIn(user) {
   return dispatch => {
     dispatch(requestSignIn())
-    const url = BACKEND_URL+'/api/sign_in';
+    const url = types.BACKEND_URL+'/api/sign_in';
     return fetch(url, {
     method: 'post',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'
@@ -128,7 +127,7 @@ function receiveSignOut() {
 export function signOut() {
   return dispatch => {
     dispatch(requestSignOut())
-    const url = BACKEND_URL+'/api/signout';
+    const url = types.BACKEND_URL+'/api/signout';
     return fetch(url)
       .then(response => {
         if(response.ok) {
